@@ -6,12 +6,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,7 +41,7 @@ fun MemoDetailScreen(
         viewModel.setCurrentMemoId(memoId)
     }
 
-    if(editClicked) {
+    if (editClicked) {
         LaunchedEffect(Unit) {
             onEditClick.invoke(memo)
         }
@@ -56,24 +60,44 @@ fun MemoDetailScreen(
             .fillMaxSize()
             .padding(innerPadding)
     ) {
-        Text(
+        TextField(
             modifier = Modifier.fillMaxWidth(),
-            text = memo.title,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
+            value = memo.title,
+            onValueChange = {},
+            enabled = false,
+            textStyle = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            ),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.background,
+                unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                disabledContainerColor = MaterialTheme.colorScheme.background,
+                errorContainerColor = MaterialTheme.colorScheme.background
+            )
         )
 
         HorizontalDivider()
 
-        Text(
+        TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1F),
-            text = memo.content,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Normal,
-            color = Color.Black
+            value = memo.content,
+            onValueChange = {},
+            enabled = false,
+            textStyle = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Black
+            ),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.background,
+                unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                disabledContainerColor = MaterialTheme.colorScheme.background,
+                errorContainerColor = MaterialTheme.colorScheme.background
+            )
         )
     }
 }

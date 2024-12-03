@@ -14,3 +14,5 @@
 .cxx
 local.properties
 app-ads.txt
+app/release
+memolite_keystore

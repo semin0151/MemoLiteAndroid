@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface MemoDao {
     @Query(
         value = """
-            SELECT * FROM ${DatabaseTable.MEMO}
+            SELECT * FROM ${DatabaseTable.MEMO} ORDER BY updatedAt DESC
         """
     )
     fun getAllMemo(): Flow<List<MemoEntity>>

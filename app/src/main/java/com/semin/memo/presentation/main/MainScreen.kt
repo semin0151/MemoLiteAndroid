@@ -16,13 +16,19 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.ads.nativead.NativeAd
+import com.semin.memo.presentation.ads.CallNativeAd
+import com.semin.memo.presentation.ads.loadNativeAd
 import com.semin.memo.presentation.common.topbar.TopBar
-import com.semin.memo.presentation.util.NotReadyException
 import com.semin.memo.presentation.util.SnackBarException
 import kotlinx.coroutines.launch
 
@@ -97,6 +103,14 @@ private fun MainScreenContent(
     val backClicked = remember { mutableStateOf(false) }
     val editClicked = remember { mutableStateOf(false) }
     val deleteClicked = remember { mutableStateOf(false) }
+    var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        loadNativeAd(context, "ca-app-pub-9173427452000522/6333761094") {
+            nativeAd = it
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -109,6 +123,11 @@ private fun MainScreenContent(
                 onEditClick = { editClicked.value = true },
                 onDeleteClick = { deleteClicked.value = true }
             )
+        },
+        bottomBar = {
+            if(nativeAd != null) {
+                CallNativeAd(nativeAd!!)
+            }
         },
         content = { innerPadding ->
             MainNavHost(

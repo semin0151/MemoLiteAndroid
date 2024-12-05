@@ -1,9 +1,12 @@
 package com.semin.memo.presentation.main
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -42,16 +45,31 @@ internal fun MainScreen(
 
     ModalNavigationDrawer(
         drawerState = drawerState,
+        gesturesEnabled = false,
         drawerContent = {
             ModalDrawerSheet {
-                Text("Drawer title", modifier = Modifier.padding(16.dp))
-                HorizontalDivider(modifier = Modifier.fillMaxWidth())
-                NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
-                    selected = false,
-                    onClick = { }
-                )
-                HorizontalDivider(modifier = Modifier.fillMaxWidth())
+                Column(
+                    modifier = Modifier.fillMaxWidth(0.8F)
+                ) {
+                    Text(
+                        "MemoLite",
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(16.dp)
+                            .fillMaxWidth()
+                    )
+                    HorizontalDivider(modifier = Modifier.fillMaxWidth())
+                    NavigationDrawerItem(
+                        label = { Text(text = "Default") },
+                        selected = false,
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+                            }
+                        }
+                    )
+                    HorizontalDivider(modifier = Modifier.fillMaxWidth())
+                }
             }
         }
     ) {
@@ -86,7 +104,7 @@ private fun MainScreenContent(
             TopBar(
                 modifier = modifier,
                 navigator = navigator,
-                onDrawerOpen = { onShowSnackBar.invoke(NotReadyException()) },
+                onDrawerOpen = { onDrawerOpen.invoke() },
                 onBackClick = { backClicked.value = true },
                 onEditClick = { editClicked.value = true },
                 onDeleteClick = { deleteClicked.value = true }

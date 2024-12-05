@@ -45,7 +45,6 @@ fun MemoScreen(
 ) {
     val memoList: List<Memo> by viewModel.memoList.collectAsStateWithLifecycle()
     val memoIsEmpty by remember { derivedStateOf { memoList.isEmpty() } }
-    val memoSize by remember { derivedStateOf { memoList.size } }
 
     Box(
         modifier = modifier
@@ -135,7 +134,7 @@ fun MemoListItemScreen(
                 .padding(end = 10.dp)
                 .widthIn(80.dp)
                 .align(Alignment.CenterVertically),
-            text = memo.createdAt.formattedDateTime,
+            text = memo.updatedAt.formattedDateTime,
             textAlign = TextAlign.End,
             fontSize = 12.sp
         )

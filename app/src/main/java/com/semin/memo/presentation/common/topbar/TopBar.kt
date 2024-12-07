@@ -3,16 +3,11 @@ package com.semin.memo.presentation.common.topbar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -29,52 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.semin.memo.presentation.main.MainNavigator
-import com.semin.memo.presentation.navigation.Route
-import com.semin.memo.utils.Logs
-
-@Composable
-internal fun TopBar(
-    modifier: Modifier = Modifier,
-    navigator: MainNavigator,
-    onDrawerOpen: () -> Unit,
-    onBackClick: () -> Unit,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit
-) {
-    val currentRoute =
-        navigator.navController.currentBackStackEntryAsState().value?.destination?.route?.split("/")
-            ?.first()
-
-    Logs.e("current::$currentRoute")
-
-    when (currentRoute) {
-        Route.Memo.route -> {
-            MemoTopBar(
-                onDrawerOpen = onDrawerOpen
-            )
-        }
-
-        Route.MemoUpsert.dataClassRoute -> {
-            AddMemoTopBar(
-                onBackClick = onBackClick
-            )
-        }
-
-        Route.MemoDetail.dataClassRoute -> {
-            MemoDetailTopBar(
-                onBackClick = { navigator.popBackStack() },
-                onEditClick = onEditClick,
-                onDeleteClick = onDeleteClick
-            )
-        }
-
-        else -> {
-
-        }
-    }
-}
 
 @Composable
 internal fun MemoTopBar(
@@ -84,7 +33,6 @@ internal fun MemoTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top))
             .height(56.dp)
     ) {
 
@@ -124,7 +72,6 @@ internal fun AddMemoTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top))
             .height(56.dp)
     ) {
         Box(
@@ -165,7 +112,6 @@ fun MemoDetailTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top))
             .height(56.dp)
     ) {
         Box(

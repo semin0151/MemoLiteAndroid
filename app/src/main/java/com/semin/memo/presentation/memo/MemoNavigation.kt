@@ -1,6 +1,5 @@
 package com.semin.memo.presentation.memo
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
@@ -8,12 +7,8 @@ import com.semin.memo.domain.memo.Memo
 import com.semin.memo.presentation.navigation.Route
 
 fun NavGraphBuilder.memoNavGraph(
-    innerPadding: PaddingValues,
     onShowSnackBar: (Throwable?) -> Unit,
     onAddClick: () -> Unit,
-    backClicked: Boolean,
-    deleteClicked: Boolean,
-    editClicked: Boolean,
     onBackClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onEditClick: (Memo) -> Unit,
@@ -21,7 +16,6 @@ fun NavGraphBuilder.memoNavGraph(
 ) {
     composable<Route.Memo> {
         MemoScreen(
-            innerPadding = innerPadding,
             onShowSnackBar = onShowSnackBar,
             onAddClick = onAddClick,
             onItemClick = onItemClick
@@ -34,9 +28,7 @@ fun NavGraphBuilder.memoNavGraph(
         val memoContent = navBackStackEntry.toRoute<Route.MemoUpsert>().memoContent
 
         MemoUpsertScreen(
-            innerPadding = innerPadding,
             onShowSnackBar = onShowSnackBar,
-            backClicked = backClicked,
             onBackClick = onBackClick,
             memoId = memoId,
             memoTitle = memoTitle,
@@ -48,12 +40,10 @@ fun NavGraphBuilder.memoNavGraph(
         val memoId = navBackStackEntry.toRoute<Route.MemoDetail>().memoId
 
         MemoDetailScreen(
-            innerPadding = innerPadding,
             onShowSnackBar = onShowSnackBar,
-            deleteClicked = deleteClicked,
-            editClicked = editClicked,
             onDeleteClick = onDeleteClick,
             onEditClick = onEditClick,
+            onBackClick = onBackClick,
             memoId = memoId
         )
     }

@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
@@ -19,7 +21,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -33,10 +34,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil3.compose.rememberAsyncImagePainter
@@ -68,9 +69,11 @@ fun loadNativeAd(context: Context, adUnitId: String, callback: (NativeAd?) -> Un
 
 @Composable
 fun CallNativeAd(nativeAd: NativeAd) {
-    HorizontalDivider(Modifier.fillMaxWidth())
-    NativeAdView(ad = nativeAd) { ad, view ->
-        LoadAdContent(ad, view)
+    Column {
+        HorizontalDivider(Modifier.fillMaxWidth())
+        NativeAdView(ad = nativeAd) { ad, view ->
+            LoadAdContent(ad, view)
+        }
     }
 }
 
@@ -82,7 +85,9 @@ fun NativeAdView(
     val contentViewId by remember { mutableIntStateOf(View.generateViewId()) }
     val adViewId by remember { mutableIntStateOf(View.generateViewId()) }
     AndroidView(
-        modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Bottom)),
+        modifier = Modifier
+            .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Bottom))
+            .height(100.dp),
         factory = { context ->
             val contentView = ComposeView(context).apply {
                 id = contentViewId
@@ -107,9 +112,8 @@ fun NativeAdView(
 @Composable
 private fun LoadAdContent(nativeAd: NativeAd?, composeView: View) {
     Card(
-        modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .clip(CardDefaults.shape)
+        modifier = Modifier
+            .fillMaxWidth()
             .combinedClickable {
                 composeView.performClick()
             },
@@ -117,7 +121,8 @@ private fun LoadAdContent(nativeAd: NativeAd?, composeView: View) {
     ) {
         nativeAd?.let {
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(8.dp)
             ) {
                 Row(
@@ -130,8 +135,8 @@ private fun LoadAdContent(nativeAd: NativeAd?, composeView: View) {
                             painter = rememberAsyncImagePainter(model = drawable),
                             contentDescription = "Ad"/*it.icon?.contentDescription*/,
                             modifier = Modifier
-                                .wrapContentWidth()
-                                .height(40.dp),
+                                .aspectRatio(1F)
+                                .fillMaxHeight(),
                             contentScale = ContentScale.Crop
                         )
                     }
@@ -140,37 +145,43 @@ private fun LoadAdContent(nativeAd: NativeAd?, composeView: View) {
 
                     Column {
                         Text(
+                            modifier = Modifier.fillMaxWidth(),
                             text = it.headline ?: "",
-                            style = MaterialTheme.typography.bodyLarge,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                         Text(
+                            modifier = Modifier.fillMaxWidth(),
                             text = it.body ?: "",
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
-                    }
-                }
 
-                it.callToAction?.let { cta ->
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(6.dp),
-                        colors = ButtonColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            contentColor = Color.Black,
-                            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            disabledContentColor = Color.Black,
-                        ),
-                        onClick = {
-                            composeView.performClick()
-                        },
-                        content = {
-                            Text(
-                                text = cta.uppercase()
+                        it.callToAction?.let { cta ->
+                            Button(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(6.dp),
+                                colors = ButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    contentColor = Color.Black,
+                                    disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    disabledContentColor = Color.Black,
+                                ),
+                                onClick = {
+                                    composeView.performClick()
+                                },
+                                content = {
+                                    Text(
+                                        text = cta.uppercase()
+                                    )
+                                }
                             )
                         }
-                    )
+                    }
                 }
             }
         } ?: run {

@@ -30,6 +30,10 @@ class MemoViewModel @Inject constructor(
 
     private val currentMemoId = MutableStateFlow(0L)
 
+    val folderList = flow {
+        emit(listOf("Default"))
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
     val memoList: StateFlow<List<Memo>> = memoRepository
         .getAllMemo()
         .combine(category) { memoList, category ->
@@ -55,10 +59,23 @@ class MemoViewModel @Inject constructor(
         Logs.e("currentTime.format::${currentTime.formattedDateTime}")
         viewModelScope.launch {
             if (memoId == 0L) {
-                memoRepository.upsertMemo(Memo.default.copy(title = title, content = content, createdAt = currentTime, updatedAt = currentTime))
+                memoRepository.upsertMemo(
+                    Memo.default.copy(
+                        title = title,
+                        content = content,
+                        createdAt = currentTime,
+                        updatedAt = currentTime
+                    )
+                )
             } else {
                 memoRepository.getMemo(memoId = memoId).collect {
-                    memoRepository.upsertMemo(it.copy(title = title, content = content, updatedAt = currentTime))
+                    memoRepository.upsertMemo(
+                        it.copy(
+                            title = title,
+                            content = content,
+                            updatedAt = currentTime
+                        )
+                    )
                 }
             }
         }

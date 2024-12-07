@@ -3,6 +3,7 @@ package com.semin.memo.presentation.main
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -13,16 +14,11 @@ internal fun MainNavHost(
     modifier: Modifier = Modifier,
     navigator: MainNavigator,
     innerPadding: PaddingValues,
-    onShowSnackBar: (Throwable?) -> Unit,
-    backClicked: Boolean,
-    deleteClicked: Boolean,
-    editClicked: Boolean,
-    onBackClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-    onEditClick: () -> Unit
+    onShowSnackBar: (Throwable?) -> Unit
 ) {
     Box(
         modifier = modifier
+            .padding(innerPadding)
             .fillMaxSize()
     ) {
         NavHost(
@@ -30,21 +26,12 @@ internal fun MainNavHost(
             startDestination = navigator.startDestination
         ) {
             memoNavGraph(
-                innerPadding = innerPadding,
                 onShowSnackBar = onShowSnackBar,
                 onAddClick = { navigator.navigateToUpsertMemo() },
-                backClicked = backClicked,
-                deleteClicked = deleteClicked,
-                editClicked = editClicked,
-                onBackClick = onBackClick,
-                onDeleteClick = onDeleteClick,
+                onBackClick = { navigator.popBackStack() },
+                onDeleteClick = { navigator.popBackStack() },
                 onEditClick = { memo ->
-                    navigator.navigateToUpsertMemo(
-                        memoId = memo.primaryKey,
-                        memoTitle = memo.title,
-                        memoContent = memo.content
-                    )
-                    onEditClick.invoke()
+                    navigator.navigateToUpsertMemo(memo)
                 },
                 onItemClick = { memo -> navigator.navigateToMemoDetail(memoId = memo.primaryKey) }
             )

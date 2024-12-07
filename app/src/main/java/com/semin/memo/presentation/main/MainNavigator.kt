@@ -5,6 +5,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.semin.memo.domain.memo.Memo
 import com.semin.memo.presentation.navigation.Route
 
 @Stable
@@ -14,15 +15,13 @@ internal class MainNavigator(
     val startDestination: Route = Route.Memo
 
     fun navigateToUpsertMemo(
-        memoId: Long = 0L,
-        memoTitle: String = "",
-        memoContent: String = ""
+        memo: Memo = Memo.default,
     ) {
         navController.navigate(
             Route.MemoUpsert(
-                memoId = memoId,
-                memoTitle = memoTitle,
-                memoContent = memoContent,
+                memoId = memo.primaryKey,
+                memoTitle = memo.title,
+                memoContent = memo.content,
             )
         )
     }

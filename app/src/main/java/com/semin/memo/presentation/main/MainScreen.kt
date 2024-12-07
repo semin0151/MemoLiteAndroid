@@ -1,5 +1,7 @@
 package com.semin.memo.presentation.main
 
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,6 +50,17 @@ internal fun MainScreen(
         }
     }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
+    BackHandler(enabled = true) {
+        if (drawerState.isOpen) {
+            coroutineScope.launch {
+                drawerState.close()
+            }
+        } else {
+            backPressedDispatcher?.onBackPressed()
+        }
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState,

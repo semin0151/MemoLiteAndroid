@@ -2,8 +2,15 @@ package com.semin.memo.presentation.memo
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
@@ -78,7 +85,12 @@ fun MemoUpsertScreen(
                         if (title.value.isEmpty()) {
                             viewModel.upsertMemo(
                                 memoId = memoId,
-                                title = content.value.substring(0..min(20, content.value.length.dec())),
+                                title = content.value.substring(
+                                    0..min(
+                                        20,
+                                        content.value.length.dec()
+                                    )
+                                ),
                                 content = content.value
                             )
                         } else {
@@ -129,7 +141,8 @@ fun MemoUpsertScreen(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1F),
+                .weight(1F)
+                .setImeWindowInsets(),
             value = content.value,
             onValueChange = {
                 content.value = it
@@ -147,4 +160,12 @@ fun MemoUpsertScreen(
             )
         )
     }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun Modifier.setImeWindowInsets(): Modifier {
+    return if (WindowInsets.isImeVisible) {
+        this.windowInsetsPadding(WindowInsets.ime.exclude(WindowInsets.navigationBars))
+    } else this
 }

@@ -11,12 +11,8 @@ sealed class Route {
         val memoId: Long,
         val memoTitle: String,
         val memoContent: String
-    ) : Route() {
-        companion object
-    }
+    ) : Route()
 
     @Serializable
-    data class MemoDetail(val memoId: Long) : Route() {
-        companion object
-    }
+    data class MemoDetail(val memoId: Long) : Route()
 }

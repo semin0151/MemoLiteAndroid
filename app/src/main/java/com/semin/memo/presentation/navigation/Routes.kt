@@ -2,7 +2,7 @@ package com.semin.memo.presentation.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed class Route() {
+sealed class Route {
     @Serializable
     data object Memo : Route()
 
@@ -12,17 +12,11 @@ sealed class Route() {
         val memoTitle: String,
         val memoContent: String
     ) : Route() {
-        companion object{
-            val dataClassRoute: String? get() = this.javaClass.canonicalName?.replace(".Companion", "")
-        }
+        companion object
     }
 
     @Serializable
     data class MemoDetail(val memoId: Long) : Route() {
-        companion object{
-            val dataClassRoute: String? get() = this.javaClass.canonicalName?.replace(".Companion", "")
-        }
+        companion object
     }
-
-    val route: String? get() = this.javaClass.canonicalName
 }

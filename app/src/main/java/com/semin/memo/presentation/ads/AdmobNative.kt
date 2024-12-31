@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -67,12 +69,15 @@ fun loadNativeAd(context: Context, adUnitId: String, callback: (NativeAd?) -> Un
     adLoader.loadAd(AdRequest.Builder().build())
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CallNativeAd(nativeAd: NativeAd) {
-    Column {
-        HorizontalDivider(Modifier.fillMaxWidth())
-        NativeAdView(ad = nativeAd) { ad, view ->
-            LoadAdContent(ad, view)
+    if(WindowInsets.isImeVisible.not()) {
+        Column {
+            HorizontalDivider(Modifier.fillMaxWidth())
+            NativeAdView(ad = nativeAd) { ad, view ->
+                LoadAdContent(ad, view)
+            }
         }
     }
 }

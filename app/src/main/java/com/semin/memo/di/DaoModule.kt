@@ -1,6 +1,7 @@
 package com.semin.memo.di
 
 import com.semin.memo.data.database.MemoDatabase
+import com.semin.memo.data.database.dao.FolderDao
 import com.semin.memo.data.database.dao.MemoDao
 import dagger.Module
 import dagger.Provides
@@ -14,4 +15,9 @@ internal object DaoModule {
     fun bindMemoDao(
         database: MemoDatabase
     ): MemoDao = database.memoDao()
+
+    @Provides
+    fun bindFolderDao(
+        database: MemoDatabase
+    ): FolderDao = database.folderDao()
 }

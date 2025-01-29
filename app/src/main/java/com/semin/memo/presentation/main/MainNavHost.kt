@@ -33,7 +33,10 @@ internal fun MainNavHost(
                 onEditClick = { memo ->
                     navigator.navigateToUpsertMemo(memo)
                 },
-                onItemClick = { memo -> navigator.navigateToMemoDetail(memoId = memo.primaryKey) }
+                onItemClick = { memo -> navigator.navigateToMemoDetail(memoId = memo.primaryKey) },
+                onFolderUpsert = {
+                    navigator.navigateToFolderUpsert()
+                }
             )
         }
     }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,10 +17,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -53,6 +56,7 @@ fun MemoScreen(
     onShowSnackBar: (Throwable?) -> Unit,
     onAddClick: () -> Unit,
     onItemClick: (Memo) -> Unit,
+    onFolderUpsert: () -> Unit,
     viewModel: MemoViewModel = hiltViewModel()
 ) {
     val memoList: List<Memo> by viewModel.memoList.collectAsStateWithLifecycle()
@@ -73,16 +77,47 @@ fun MemoScreen(
                     modifier = Modifier
                         .fillMaxWidth(0.8F)
                         .fillMaxHeight()
-                        .background(NavigationDrawerItemDefaults.colors().containerColor(false).value)
+                        .background(
+                            NavigationDrawerItemDefaults
+                                .colors()
+                                .containerColor(false).value
+                        )
                 ) {
-                    Text(
-                        "MemoLite",
+
+                    Row(
                         modifier = Modifier
+                            .height(56.dp)
                             .background(MaterialTheme.colorScheme.primaryContainer)
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                    )
+                    ) {
+                        Text(
+                            text = "MemoLite",
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(start = 16.dp)
+                                .weight(1F)
+                        )
+
+                        IconButton(
+                            modifier = Modifier
+                                .height(56.dp)
+                                .aspectRatio(1F),
+                            onClick = {
+                                onFolderUpsert.invoke()
+                            }
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .padding(16.dp),
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = ""
+                            )
+                        }
+                    }
+
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
+
                     LazyColumn {
                         items(folderList) {
                             NavigationDrawerItem(

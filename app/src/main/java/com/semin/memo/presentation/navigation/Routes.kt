@@ -15,4 +15,7 @@ sealed class Route {
 
     @Serializable
     data class MemoDetail(val memoId: Long) : Route()
+
+    @Serializable
+    data object FolderUpsert: Route()
 }

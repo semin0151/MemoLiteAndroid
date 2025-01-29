@@ -13,12 +13,14 @@ fun NavGraphBuilder.memoNavGraph(
     onDeleteClick: () -> Unit,
     onEditClick: (Memo) -> Unit,
     onItemClick: (Memo) -> Unit,
+    onFolderUpsert: () -> Unit
 ) {
     composable<Route.Memo> {
         MemoScreen(
             onShowSnackBar = onShowSnackBar,
             onAddClick = onAddClick,
-            onItemClick = onItemClick
+            onItemClick = onItemClick,
+            onFolderUpsert = onFolderUpsert
         )
     }
 
@@ -46,5 +48,9 @@ fun NavGraphBuilder.memoNavGraph(
             onBackClick = onBackClick,
             memoId = memoId
         )
+    }
+
+    composable<Route.FolderUpsert> {
+        FolderUpsertScreen()
     }
 }

@@ -30,6 +30,10 @@ internal class MainNavigator(
         navController.navigate(Route.MemoDetail(memoId))
     }
 
+    fun navigateToFolderUpsert() {
+        navController.navigate(Route.FolderUpsert)
+    }
+
     fun popBackStack() {
         navController.popBackStack()
     }

@@ -24,12 +24,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.semin.memo.utils.Logs
 
 @Composable
 internal fun MemoTopBar(
     modifier: Modifier = Modifier,
+    topBarTitle: String,
     onDrawerOpen: () -> Unit = {},
 ) {
+    Logs.e("topBarTitle::$topBarTitle")
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -55,7 +58,7 @@ internal fun MemoTopBar(
 
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = "Memo",
+            text = topBarTitle,
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,

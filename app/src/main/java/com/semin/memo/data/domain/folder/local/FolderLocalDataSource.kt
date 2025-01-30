@@ -8,7 +8,13 @@ interface FolderLocalDataSource {
 
     suspend fun upsertFolder(folderEntity: FolderEntity)
 
+    suspend fun updateFolder(folderEntity: FolderEntity)
+
     suspend fun deleteFolder(folderEntity: FolderEntity)
 
     suspend fun deleteAll()
+
+    fun getLastFolder(): Flow<FolderEntity>
+
+    suspend fun upsertLastFolderPrimaryKey(primaryKey: Long)
 }

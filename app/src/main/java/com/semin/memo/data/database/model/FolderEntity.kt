@@ -11,11 +11,13 @@ data class FolderEntity(
     val category: String,
     val createdAt: Long,
     val updatedAt: Long,
+    val isDefault: Boolean
 ) {
     fun toModel() = Folder(
         primaryKey = primaryKey,
         category = category,
         createdAt = createdAt,
-        updatedAt = updatedAt
+        updatedAt = updatedAt,
+        isDefault = isDefault
     )
 }

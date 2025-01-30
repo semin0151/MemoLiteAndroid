@@ -4,7 +4,8 @@ import com.semin.memo.data.database.model.MemoEntity
 
 data class Memo(
     val primaryKey: Long = 0L,
-    val category: String = Category.Default.name,
+    val folderPrimaryKey: Long,
+    val category: String,
     val title: String,
     val content: String,
     val createdAt: Long,
@@ -12,6 +13,8 @@ data class Memo(
 ) {
     companion object {
         val default = Memo(
+            folderPrimaryKey = 0L,
+            category = "",
             title = "",
             content = "",
             createdAt = 0L,
@@ -21,14 +24,11 @@ data class Memo(
 
     fun toEntity() = MemoEntity(
         primaryKey = primaryKey,
+        folderPrimaryKey = folderPrimaryKey,
         category = category,
         title = title,
         content = content,
         createdAt = createdAt,
         updatedAt = updatedAt,
     )
-}
-
-enum class Category {
-    Default
 }

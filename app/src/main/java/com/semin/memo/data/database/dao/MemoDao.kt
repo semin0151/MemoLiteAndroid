@@ -29,4 +29,11 @@ interface MemoDao {
 
     @Delete
     suspend fun deleteMemo(memoEntity: MemoEntity)
+
+    @Query(
+        value = """
+            DELETE FROM ${DatabaseTable.MEMO} WHERE folderPrimaryKey = :folderPrimaryKey 
+        """
+    )
+    suspend fun deleteMemoByFolderPrimaryKey(folderPrimaryKey: Long)
 }

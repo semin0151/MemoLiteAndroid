@@ -47,6 +47,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.semin.memo.domain.memo.Memo
 import com.semin.memo.presentation.common.topbar.MemoTopBar
+import com.semin.memo.utils.Logs
 import com.semin.memo.utils.formattedDateTime
 import kotlinx.coroutines.launch
 
@@ -59,8 +60,10 @@ fun MemoScreen(
     onFolderUpsert: () -> Unit,
     viewModel: MemoViewModel = hiltViewModel()
 ) {
+    Logs.e("MemoScreen!!!")
     val memoList: List<Memo> by viewModel.memoList.collectAsStateWithLifecycle()
     val memoIsEmpty by remember { derivedStateOf { memoList.isEmpty() } }
+    val folderName by viewModel.category.collectAsStateWithLifecycle()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
@@ -123,11 +126,12 @@ fun MemoScreen(
                             NavigationDrawerItem(
                                 shape = RectangleShape,
                                 label = {
-                                    Text(text = it)
+                                    Text(text = it.category)
                                 },
                                 selected = false,
                                 onClick = {
                                     coroutineScope.launch {
+                                        viewModel.upsertLastFolderPrimaryKey(it.primaryKey)
                                         drawerState.close()
                                     }
                                 }
@@ -141,6 +145,7 @@ fun MemoScreen(
     ) {
         Column {
             MemoTopBar(
+                topBarTitle = folderName,
                 onDrawerOpen = {
                     coroutineScope.launch {
                         drawerState.open()
@@ -251,6 +256,8 @@ fun MemoListItemScreen(
 private fun MemoListItemPreview() {
     MemoListItemScreen(
         memo = Memo(
+            folderPrimaryKey = 0L,
+            category = "",
             title = "seminzzangseminzzangseminzzang",
             content = "hello world",
             createdAt = 0L,

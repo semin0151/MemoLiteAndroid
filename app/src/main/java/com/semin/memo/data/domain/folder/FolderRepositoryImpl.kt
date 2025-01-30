@@ -20,11 +20,23 @@ class FolderRepositoryImpl @Inject constructor(
         localDataSource.upsertFolder(folder.toEntity())
     }
 
+    override suspend fun updateFolder(folder: Folder) {
+        localDataSource.updateFolder(folder.toEntity())
+    }
+
     override suspend fun deleteFolder(folder: Folder) {
         localDataSource.deleteFolder(folder.toEntity())
     }
 
     override suspend fun deleteAll() {
         localDataSource.deleteAll()
+    }
+
+    override fun getLastFolder(): Flow<Folder> {
+        return localDataSource.getLastFolder().map { it.toModel() }
+    }
+
+    override suspend fun upsertLastFolderPrimaryKey(primaryKey: Long) {
+        localDataSource.upsertLastFolderPrimaryKey(primaryKey)
     }
 }

@@ -8,6 +8,7 @@ import com.semin.memo.domain.memo.Memo
 @Entity(tableName = DatabaseTable.MEMO)
 data class MemoEntity(
     @PrimaryKey(autoGenerate = true) val primaryKey: Long,
+    val folderPrimaryKey: Long,
     val category: String,
     val title: String,
     val content: String,
@@ -16,6 +17,7 @@ data class MemoEntity(
 ) {
     fun toModel() = Memo(
         primaryKey = primaryKey,
+        folderPrimaryKey = folderPrimaryKey,
         category = category,
         title = title,
         content = content,

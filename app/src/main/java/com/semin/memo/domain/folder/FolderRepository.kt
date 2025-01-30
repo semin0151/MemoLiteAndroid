@@ -7,7 +7,13 @@ interface FolderRepository {
 
     suspend fun upsertFolder(folder: Folder)
 
+    suspend fun updateFolder(folder: Folder)
+
     suspend fun deleteFolder(folder: Folder)
 
     suspend fun deleteAll()
+
+    fun getLastFolder(): Flow<Folder>
+
+    suspend fun upsertLastFolderPrimaryKey(primaryKey: Long)
 }

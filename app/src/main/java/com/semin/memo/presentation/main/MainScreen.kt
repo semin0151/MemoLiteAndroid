@@ -1,16 +1,23 @@
 package com.semin.memo.presentation.main
 
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.ads.nativead.NativeAd
 import com.semin.memo.presentation.ads.CallNativeAd
@@ -34,11 +41,26 @@ internal fun MainScreen(
         }
     }
 
+    SetStatusBarStyle()
+
     MainScreenContent(
         navigator = navigator,
         onShowSnackBar = onShowSnackBar,
         snackBarHostState = snackBarHostState
     )
+}
+
+@Composable
+fun SetStatusBarStyle() {
+    val isDarkMode = isSystemInDarkTheme()
+    val activity = LocalContext.current as ComponentActivity
+    val primaryColor = MaterialTheme.colorScheme.primary.toArgb()
+
+    LaunchedEffect(isDarkMode) {
+        activity.enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(primaryColor)
+        )
+    }
 }
 
 @Composable

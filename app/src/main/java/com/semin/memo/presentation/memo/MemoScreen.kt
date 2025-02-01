@@ -74,7 +74,7 @@ fun MemoScreen(
         gesturesEnabled = true,
         drawerContent = {
             ModalDrawerSheet(
-                drawerContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                drawerContainerColor = MaterialTheme.colorScheme.primary,
             ) {
                 Column(
                     modifier = Modifier
@@ -90,7 +90,7 @@ fun MemoScreen(
                     Row(
                         modifier = Modifier
                             .height(56.dp)
-                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .background(MaterialTheme.colorScheme.primary)
                     ) {
                         Text(
                             text = "MemoLite",
@@ -99,7 +99,8 @@ fun MemoScreen(
                                 .fillMaxWidth()
                                 .wrapContentHeight()
                                 .padding(start = 16.dp)
-                                .weight(1F)
+                                .weight(1F),
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
 
                         IconButton(
@@ -114,12 +115,17 @@ fun MemoScreen(
                                 modifier = Modifier
                                     .padding(16.dp),
                                 imageVector = Icons.Default.Settings,
-                                contentDescription = ""
+                                contentDescription = "",
+                                tint = MaterialTheme.colorScheme.onPrimary
                             )
                         }
                     }
 
-                    HorizontalDivider(modifier = Modifier.fillMaxWidth())
+                    HorizontalDivider(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.primary
+                    )
 
                     LazyColumn {
                         items(folderList) {
@@ -134,9 +140,23 @@ fun MemoScreen(
                                         viewModel.upsertLastFolderPrimaryKey(it.primaryKey)
                                         drawerState.close()
                                     }
-                                }
+                                },
+                                colors = NavigationDrawerItemDefaults.colors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    unselectedContainerColor = MaterialTheme.colorScheme.surface,
+                                    selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    selectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    selectedBadgeColor = MaterialTheme.colorScheme.primary,
+                                    unselectedBadgeColor = MaterialTheme.colorScheme.primary,
+                                )
                             )
-                            HorizontalDivider(modifier = Modifier.fillMaxWidth())
+                            HorizontalDivider(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.primary
+                            )
                         }
                     }
                 }
@@ -170,6 +190,8 @@ fun MemoScreen(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(end = 20.dp, bottom = 20.dp),
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     onClick = onAddClick
                 ) {
                     Icon(

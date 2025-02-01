@@ -1,5 +1,6 @@
 package com.semin.memo.presentation.common.topbar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,6 +39,7 @@ internal fun MemoTopBar(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
 
         Box(
@@ -53,6 +56,7 @@ internal fun MemoTopBar(
                     .padding(16.dp),
                 imageVector = Icons.Filled.Menu,
                 contentDescription = "Drawer",
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -62,7 +66,8 @@ internal fun MemoTopBar(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
-            fontFamily = FontFamily.SansSerif
+            fontFamily = FontFamily.SansSerif,
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -76,6 +81,7 @@ internal fun AddMemoTopBar(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         Box(
             modifier = Modifier
@@ -91,6 +97,7 @@ internal fun AddMemoTopBar(
                     .padding(16.dp),
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -100,7 +107,8 @@ internal fun AddMemoTopBar(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
-            fontFamily = FontFamily.SansSerif
+            fontFamily = FontFamily.SansSerif,
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -116,6 +124,7 @@ fun MemoDetailTopBar(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         Box(
             modifier = Modifier
@@ -131,6 +140,7 @@ fun MemoDetailTopBar(
                     .padding(16.dp),
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -140,7 +150,8 @@ fun MemoDetailTopBar(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
-            fontFamily = FontFamily.SansSerif
+            fontFamily = FontFamily.SansSerif,
+            color = MaterialTheme.colorScheme.onPrimary
         )
 
         Row(
@@ -161,6 +172,7 @@ fun MemoDetailTopBar(
                         .padding(16.dp),
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Edit",
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
@@ -176,6 +188,7 @@ fun MemoDetailTopBar(
                         .padding(16.dp),
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit",
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
@@ -193,6 +206,7 @@ internal fun FolderTopBar(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         Box(
             modifier = Modifier
@@ -208,6 +222,7 @@ internal fun FolderTopBar(
                     .padding(16.dp),
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -217,7 +232,8 @@ internal fun FolderTopBar(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
-            fontFamily = FontFamily.SansSerif
+            fontFamily = FontFamily.SansSerif,
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }

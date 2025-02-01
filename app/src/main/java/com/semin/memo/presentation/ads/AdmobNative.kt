@@ -171,10 +171,10 @@ private fun LoadAdContent(nativeAd: NativeAd?, composeView: View) {
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(6.dp),
                                 colors = ButtonColors(
-                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    contentColor = Color.Black,
-                                    disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    disabledContentColor = Color.Black,
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                                    disabledContainerColor = MaterialTheme.colorScheme.primary,
+                                    disabledContentColor = MaterialTheme.colorScheme.onPrimary,
                                 ),
                                 onClick = {
                                     composeView.performClick()

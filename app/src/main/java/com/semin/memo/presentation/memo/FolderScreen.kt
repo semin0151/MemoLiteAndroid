@@ -38,6 +38,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.semin.memo.domain.folder.Folder
+import com.semin.memo.presentation.common.topbar.FolderTopBar
 import com.semin.memo.utils.Logs
 import com.semin.memo.utils.formattedDateTime
 import kotlinx.datetime.Clock
@@ -46,6 +47,7 @@ import kotlinx.datetime.Clock
 @Composable
 fun FolderUpsertScreen(
     modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
     viewModel: FolderViewModel = hiltViewModel()
 ) {
     val folders = viewModel.folders.collectAsStateWithLifecycle()
@@ -57,6 +59,10 @@ fun FolderUpsertScreen(
             .fillMaxSize()
     ) {
         Column {
+            FolderTopBar(
+                onBackClick = onBackClick
+            )
+
             LazyColumn {
                 items(folders.value) {
                     Row(

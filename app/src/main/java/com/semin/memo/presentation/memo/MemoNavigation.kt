@@ -51,6 +51,8 @@ fun NavGraphBuilder.memoNavGraph(
     }
 
     composable<Route.FolderUpsert> {
-        FolderUpsertScreen()
+        FolderUpsertScreen(
+            onBackClick = onBackClick
+        )
     }
 }

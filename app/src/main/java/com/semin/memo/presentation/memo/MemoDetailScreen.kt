@@ -3,6 +3,8 @@ package com.semin.memo.presentation.memo
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
@@ -76,7 +78,8 @@ fun MemoDetailScreen(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1F),
+                .weight(1F)
+                .verticalScroll(rememberScrollState()),
             value = memo.content,
             onValueChange = {},
             enabled = false,

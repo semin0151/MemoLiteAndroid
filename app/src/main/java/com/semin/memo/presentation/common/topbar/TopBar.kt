@@ -184,6 +184,44 @@ fun MemoDetailTopBar(
     }
 }
 
+@Composable
+internal fun FolderTopBar(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {}
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .align(Alignment.CenterStart)
+                .aspectRatio(1.0F)
+                .clickable {
+                    onBackClick.invoke()
+                }
+        ) {
+            Icon(
+                modifier = Modifier
+                    .padding(16.dp),
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back",
+            )
+        }
+
+        Text(
+            modifier = Modifier.align(Alignment.Center),
+            text = "Folder",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+            fontFamily = FontFamily.SansSerif
+        )
+    }
+}
+
 @Preview
 @Composable
 fun TopBarTest() {
